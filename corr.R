@@ -4,6 +4,10 @@ source("complete.R")
 
 corr <- function(folder, threshold = 0) {
 
+#   Set initial vectors
+
+    vsulfate <- vector(); vnitrate <- vector()
+
     dir <- getwd()
 
     pathfile <- paste(dir,"/",folder, sep ="")
@@ -28,16 +32,20 @@ corr <- function(folder, threshold = 0) {
 
             data_clean <- na.omit(data_files)
           
-            print(c("DETECTOR", i))
-
 #   Extraigo los parametros de interes en cada detector
 
-            print(length(data_clean$sulfate))
-            print(length(data_clean$nitrate))
+            print(cor(data_clean$sulfate, data_clean$nitrate))
+            vsulfate <- c(vsulfate, data_clean$sulfate)
+            vnitrate <- c(vnitrate, data_clean$nitrate)
         }
     }
 
+
+print(summary(cor(vsulfate, vnitrate, use = "everything",
+         method = c("pearson", "kendall", "spearman"))))
+
+#print(length(vnitrate))
 }
 
-corr("specdata", 800)
+corr("specdata", 150)
 
