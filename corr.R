@@ -7,6 +7,7 @@ corr <- function(folder, threshold = 0) {
 #   Set initial vectors
 
     vsulfate <- vector(); vnitrate <- vector()
+    correl <- numeric()
 
     dir <- getwd()
 
@@ -14,13 +15,13 @@ corr <- function(folder, threshold = 0) {
 
     files <- list.files(pathfile, all.files = FALSE)
 
-    for (i in 1:length(files)) {
-
-        var <- (complete(folder, i))
-
+    framedf <- complete(folder)
+    print(class(framedf))
 #   Selecciono que archivo tiene mediciones por encima del threshold
+ 
+    ids <- framedf[framedf["nobs"] > threshold, ]$id
 
-        if (var$nobs > threshold) {
+    for (i in ids) {
 
 #   Tomo los datos de los archivos de interes
 
@@ -33,19 +34,17 @@ corr <- function(folder, threshold = 0) {
             data_clean <- na.omit(data_files)
           
 #   Extraigo los parametros de interes en cada detector
+            correl <- c(correl, cor(data_clean$sulfate, data_clean$nitrate))
 
-            print(cor(data_clean$sulfate, data_clean$nitrate))
-            vsulfate <- c(vsulfate, data_clean$sulfate)
-            vnitrate <- c(vnitrate, data_clean$nitrate)
+
         }
+
+            return(correl)
     }
 
+cr <- corr("specdata", 400)
 
-print(summary(cor(vsulfate, vnitrate, use = "everything",
-         method = c("pearson", "kendall", "spearman"))))
+head(cr)
 
-#print(length(vnitrate))
-}
-
-corr("specdata", 150)
+print(summary(cr))
 
