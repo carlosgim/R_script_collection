@@ -18,16 +18,17 @@ corr <- function(folder, threshold = 0) {
 
         if (var$nobs > threshold) {
 
-            print(var$nobs)
-
 #   Tomo los datos de los archivos de interes
 
-            data_files <- read.csv(pathfile, header = TRUE, sep = ",", 
+            data_files <- read.csv(paste(pathfile,"/",files[i], sep=""), 
+                                   header = TRUE, sep = ",", 
                                    na.strings = c("NA","NaN", " "))
+
+            data_clean <- na.omit(data_files)
+
+            print(data_clean)
         }
     }
-#    Evaluo si el número de casos es suficiente para considerar
-#    el monitor
 
 }
 
