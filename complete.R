@@ -21,7 +21,7 @@ idlist <- list(0); count <- list(0)
   }
 storedata <- do.call(rbind, Map(data.frame, id = idlist, nobs = count))
 
-print(storedata)
+#print(storedata)
 
 }
 

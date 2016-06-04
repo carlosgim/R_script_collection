@@ -14,7 +14,7 @@ corr <- function(folder, threshold = 0) {
 
         var <- (complete(folder, i))
 
-#   Selecciono que archivo tiene mediciones
+#   Selecciono que archivo tiene mediciones por encima del threshold
 
         if (var$nobs > threshold) {
 
@@ -24,9 +24,16 @@ corr <- function(folder, threshold = 0) {
                                    header = TRUE, sep = ",", 
                                    na.strings = c("NA","NaN", " "))
 
-            data_clean <- na.omit(data_files)
+#   Elimino los valores NA (Clean file)
 
-            print(data_clean)
+            data_clean <- na.omit(data_files)
+          
+            print(c("DETECTOR", i))
+
+#   Extraigo los parametros de interes en cada detector
+
+            print(length(data_clean$sulfate))
+            print(length(data_clean$nitrate))
         }
     }
 
