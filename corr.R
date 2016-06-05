@@ -40,11 +40,11 @@ corr <- function(folder, threshold = 0) {
         }
 
             return(correl)
+            head(correl)
+
+            print(summary(correl))
     }
 
-cr <- corr("specdata", 400)
+#cr <- corr("specdata", 400)
 
-head(cr)
-
-print(summary(cr))
 
